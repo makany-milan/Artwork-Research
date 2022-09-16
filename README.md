@@ -21,8 +21,9 @@ Extract, clean and store artwork price data for research purposes
 | artist_gender_match.do | Data Merging | Merge artists to our artist database - Specific use case|
 
 
-
-| mailbox_extraction | Side-Project | Contains scripts to automate data extraction and email sending |
+## Scripts > Side-Projects
+| Filename | Purpose | Description |
+| mailbox_extraction | Data Extraction | Contains scripts to automate data extraction and email sending |
 | --- | --- | --- |
 | automated_gallery_messages > send_emails.py | Data Collection | Automatically compose and send out pre-formatted emails |
 | automated_gallery_messages > login.py | Settings | Store the login information for the mailbox |
