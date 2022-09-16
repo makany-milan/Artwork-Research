@@ -1,0 +1,7 @@
+{
+    "python.linting.pylintEnabled": false,
+    "python.linting.pylamaEnabled": true,
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": false,
+    "python.pythonPath": "C:\\Users\\Milan\\anaconda\\envs\\Artsy_Research\\python.exe"
+}

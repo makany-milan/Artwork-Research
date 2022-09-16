@@ -1,0 +1,344 @@
+{
+    "id": "328",
+    "_id": "328",
+    "name": "Andy Warhol",
+    "first_name": "Andy",
+    "last_name": "Warhol",
+    "aliases": [
+        "Andrijko Varhola"
+    ],
+    "birth_date": "1928-08-06",
+    "birth_year": 1928,
+    "birth_location": "Pittsburgh, PA (US)",
+    "death_date": "1987-02-22",
+    "death_year": 1987,
+    "death_location": "New York City, NY (US)",
+    "lives_and_works": [],
+    "sector": "Post-War",
+    "gender": "m",
+    "nationality": [
+        "United States"
+    ],
+    "movements": [
+        "Pop Art"
+    ],
+    "media": [
+        "Painting",
+        "Photography",
+        "Works on Paper",
+        "Printmaking"
+    ],
+    "links": {
+        "profile": "https://artfacts.net/artist/andy-warhol/328",
+        "card": "/artist/andy-warhol/328",
+        "www": "https://www.warholfoundation.org",
+        "wikipedia": "https://en.wikipedia.org/wiki/Andy_Warhol"
+    },
+    "ranking": "Top 10",
+    "ranking_trend": "=",
+    "cities": [],
+    "countries": [
+        {
+            "_id": 18,
+            "name": "United States",
+            "iso2": "US",
+            "links": {
+                "profile": "https://artfacts.net/country/united-states/18",
+                "card": "/country/united-states/18"
+            }
+        }
+    ],
+    "most_exhibitions_in": [
+        {
+            "country": {
+                "_id": "18",
+                "name": "United States",
+                "iso2": "US",
+                "links": {
+                    "profile": "https://artfacts.net/country/united-states/18",
+                    "card": "/country/united-states/18"
+                }
+            },
+            "count": 1702
+        },
+        {
+            "country": {
+                "_id": "1",
+                "name": "Germany",
+                "iso2": "DE",
+                "links": {
+                    "profile": "https://artfacts.net/country/germany/1",
+                    "card": "/country/germany/1"
+                }
+            },
+            "count": 750
+        },
+        {
+            "country": {
+                "_id": "14",
+                "name": "United Kingdom",
+                "iso2": "GB",
+                "links": {
+                    "profile": "https://artfacts.net/country/united-kingdom/14",
+                    "card": "/country/united-kingdom/14"
+                }
+            },
+            "count": 260
+        }
+    ],
+    "most_important_exhibitions_at": [
+        {
+            "id": "2228",
+            "name": "Museum of Modern Art (MoMA)",
+            "city": {
+                "_id": 59,
+                "name": "New York City, NY",
+                "links": {
+                    "profile": "https://artfacts.net/city/new-york-city-ny/59",
+                    "card": "/city/new-york-city-ny/59"
+                }
+            },
+            "links": {
+                "profile": "https://artfacts.net/institution/museum-of-modern-art-moma/2228",
+                "card": "/institution/museum-of-modern-art-moma/2228",
+                "www": "www.moma.org"
+            }
+        },
+        {
+            "id": "2367",
+            "name": "La Biennale di Venezia",
+            "city": {
+                "_id": 95,
+                "name": "Venice",
+                "links": {
+                    "profile": "https://artfacts.net/city/venice/95",
+                    "card": "/city/venice/95"
+                }
+            },
+            "links": {
+                "profile": "https://artfacts.net/institution/la-biennale-di-venezia/2367",
+                "card": "/institution/la-biennale-di-venezia/2367",
+                "www": "www.labiennale.org/it/arte/",
+                "facebook": "www.facebook.com/Labiennaledivenezia",
+                "twitter": "twitter.com/la_Biennale",
+                "wikipedia": "en.wikipedia.org/wiki/Venice_Biennale"
+            }
+        },
+        {
+            "id": "4081",
+            "name": "Biennale of Sydney",
+            "city": {
+                "_id": 289,
+                "name": "Sydney, NSW",
+                "links": {
+                    "profile": "https://artfacts.net/city/sydney-nsw/289",
+                    "card": "/city/sydney-nsw/289"
+                }
+            },
+            "links": {
+                "profile": "https://artfacts.net/institution/biennale-of-sydney/4081",
+                "card": "/institution/biennale-of-sydney/4081",
+                "www": "https://biennaleofsydney.art",
+                "facebook": "www.facebook.com/biennaleofsydney",
+                "twitter": "twitter.com/biennalesydney",
+                "wikipedia": "en.wikipedia.org/wiki/Biennale_of_Sydney"
+            }
+        }
+    ],
+    "national_ranking": [
+        {
+            "name": "United States",
+            "iso2": "US",
+            "rank": "Top 10"
+        }
+    ],
+    "description": "",
+    "cover_artwork": {
+        "id": "18162",
+        "title": "Cow",
+        "links": {
+            "card": "/artwork/cow/18162",
+            "image": "https://images.artfacts.net/artworkpics/18162.jpg",
+            "preview": "https://images.artfacts.net/artworkpics/preview/18162.jpg"
+        }
+    },
+    "counts": {
+        "follower": 37,
+        "artwork": 50,
+        "exhibition": {
+            "total": 4326,
+            "solo": 883,
+            "group": 3245,
+            "artfair": 174,
+            "collective": 0,
+            "current": 10,
+            "biennial": 24
+        },
+        "exhibition_per_region": [
+            {
+                "name": "Eastern Africa",
+                "latitude": -6.7,
+                "longitude": 39.33,
+                "count": "0"
+            },
+            {
+                "name": "Middle Africa",
+                "latitude": -4.33,
+                "longitude": 15.33,
+                "count": "1"
+            },
+            {
+                "name": "Northern Africa",
+                "latitude": 32.9,
+                "longitude": 13.2,
+                "count": "0"
+            },
+            {
+                "name": "Southern Africa",
+                "latitude": -33.95,
+                "longitude": 18.5,
+                "count": "4"
+            },
+            {
+                "name": "Western Africa",
+                "latitude": 17,
+                "longitude": -4,
+                "count": "0"
+            },
+            {
+                "name": "Caribbean",
+                "latitude": 15.5,
+                "longitude": -75.75,
+                "count": "6"
+            },
+            {
+                "name": "Central America",
+                "latitude": 17,
+                "longitude": -90,
+                "count": "17"
+            },
+            {
+                "name": "South America",
+                "latitude": -23,
+                "longitude": -60,
+                "count": "40"
+            },
+            {
+                "name": "Northern America",
+                "latitude": 33,
+                "longitude": -94.5,
+                "count": "1717"
+            },
+            {
+                "name": "Central Asia",
+                "latitude": 51,
+                "longitude": 71.4,
+                "count": "0"
+            },
+            {
+                "name": "Eastern Asia",
+                "latitude": 40,
+                "longitude": 116.4,
+                "count": "143"
+            },
+            {
+                "name": "Southern Asia",
+                "latitude": 21,
+                "longitude": 78,
+                "count": "4"
+            },
+            {
+                "name": "South-Eastern Asia",
+                "latitude": -5,
+                "longitude": 120,
+                "count": "19"
+            },
+            {
+                "name": "Western Asia",
+                "latitude": 24,
+                "longitude": 45,
+                "count": "19"
+            },
+            {
+                "name": "Eastern Europe",
+                "latitude": 55.5,
+                "longitude": 37.55,
+                "count": "108"
+            },
+            {
+                "name": "Northern Europe",
+                "latitude": 60,
+                "longitude": 12,
+                "count": "336"
+            },
+            {
+                "name": "Southern Europe",
+                "latitude": 41,
+                "longitude": 20,
+                "count": "337"
+            },
+            {
+                "name": "Western Europe",
+                "latitude": 50,
+                "longitude": 5,
+                "count": "1357"
+            },
+            {
+                "name": "Australia and New Zealand",
+                "latitude": -27,
+                "longitude": 150,
+                "count": "41"
+            },
+            {
+                "name": "Melanesia",
+                "latitude": -9,
+                "longitude": 160,
+                "count": "0"
+            },
+            {
+                "name": "Polynesia",
+                "latitude": -17,
+                "longitude": 150,
+                "count": "0"
+            },
+            {
+                "name": "Micronesia",
+                "latitude": 9,
+                "longitude": 168,
+                "count": "0"
+            }
+        ],
+        "exhibition_by_institution_type": [
+            [
+                "museum",
+                2329
+            ],
+            [
+                "gallery",
+                1508
+            ],
+            [
+                "artfair",
+                173
+            ],
+            [
+                "biennial",
+                24
+            ],
+            [
+                "other",
+                291
+            ]
+        ],
+        "catalog": 14,
+        "dealer": 235,
+        "collection": 268
+    },
+    "seo_text": [
+        "Andy Warhol is a <a href=\"/sector/post-war\">Post-War</a> artist, mainly working with <a href=\"/movements/pop-art\">Pop Art</a>. Andy Warhol is a <a href=\"/country/united-states/18\">American</a> <a href=\"/gender/m\">male</a> artist born in Pittsburgh, PA (US) in 1928.",
+        "Andy Warhol’s first exhibition was <a href=\"/exhibition/andy-warhol:-fifteen-drawings-based-on-the-writings-of-truman-capote/332749\">Andy Warhol: Fifteen Drawings Based on the Writings of Truman Capote</a> at <a href=\"/institution/hugo-gallery/25070\">Hugo Gallery</a> in <a href=\"/city/new-york-city-ny/59\">New York City, NY</a> in 1952, and the most recent exhibition was <a href=\"/exhibition/frieze-masters-ovr/929094\">Frieze Masters OVR</a> at <a href=\"/institution/frieze-masters/6746\">Frieze Masters</a> in <a href=\"/city/london/2\">London</a> in 2020. Andy Warhol is mostly exhibited in <a href=\"/country/united-states/18\">United States</a>, but also had exhibitions in <a href=\"/country/germany/1\">Germany</a>, <a href=\"/country/united-kingdom/14\">United Kingdom</a> and elsewhere. Warhol has 883 solo shows and 3245 group shows over the last 68 years (for more information, see <a href=\"/artist/andy-warhol/328/biography\">biography</a>). Warhol has also been in 174 art fairs and in 24 biennials. The most important show was <a href=\"/exhibition/andy-warhol:-a-retrospective/135572\">Andy Warhol: A Retrospective</a> at <a href=\"/institution/museum-of-modern-art-moma/2228\">MoMA - Museum of Modern Art</a> in <a href=\"/city/new-york-city-ny/59\">New York City, NY</a> in 1989. Other important shows were at <a href=\"/institution/la-biennale-di-venezia/2367\">La Biennale di Venezia</a> in <a href=\"/city/venice/95\">Venice</a> and <a href=\"/institution/biennale-of-sydney/4081\">Biennale of Sydney</a> in <a href=\"/city/sydney-nsw/289\">Sydney, NSW</a>. Andy Warhol has been exhibited with <a href=\"/artist/roy-lichtenstein/1892\">Roy Lichtenstein</a> and <a href=\"/artist/robert-rauschenberg/2345\">Robert Rauschenberg</a>. Andy Warhol’s art is in 268 museum collections, at <a href=\"/institution/museum-of-modern-art-moma/2228\">Museum of Modern Art (MoMA)</a> in <a href=\"/city/new-york-city-ny/59\">New York City, NY</a> and <a href=\"/institution/centre-pompidou/2219\">Centre Pompidou</a> in <a href=\"/city/paris/63\">Paris</a> among others.",
+        "Andy Warhol is ranked among the Top 10 globally, and among the Top 10 in United States. Warhol’s best rank was in 2021, with the most dramatic change in 1956. For a complete illustration of the artist’s career since 1952, please see the career chart on the <a href=\"/artist/andy-warhol/328/trends\">trends</a> page."
+    ],
+    "artists": [],
+    "groups": []
+}

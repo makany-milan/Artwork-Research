@@ -1,0 +1,37 @@
+/
+name: h1, partner2-name
+about: div, partner2-about > p
+news: div, partner2-news > partner2-news-item > partner2-news-item-title > href
+
+/shows
+useless if we collect data from shows tab as well.
+
+/works
+useless due to data collected from collections tab
+
+/artists
+artists: div, artists-columns-container (2) > artists-column (many) > li (many) > partner2-route-link (href)
+(1) represented
+(2) active
+
+/articles
+articles: div, articles-grid__img-container (href)
+
+/contact
+website: a, partner2-website
+locations: div, partner2-locations > location > google maps link &  > location-details > p
+
+
+Much of the stuff is JS rendered. Look into js rendering of websites. requests-html
+
+https://www.artsy.net/waterhouse-and-dodd/artists
+
+https://www.artsy.net/waterhouse-and-dodd/artists
+
+session = HTMLSession()
+r = session.get(url)
+r.html.render()
+
+https://developers.artsy.net/client_applications
+
+rate limit: 5 requests / 1 sec
