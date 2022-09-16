@@ -16,9 +16,11 @@ Extract, clean and store artwork price data for research purposes
 | panel_transform_raw_alg.do | Algorithm | Raw algorithm of panel_tranform.do |
 | adams_et_al_2021_analysis_replication.do | Analysis | Preliminary replication of regressions ran in Adams et al. (2021)|
 | materials_frequency.py | Analysis | Extract the frequency of materials used in artworks |
+| csv_format_converter.py | Data Manipulation | Format CSV files for Stata compatibility |
 | artist_gender_match.py | Data Merging | Merge artists to our artist database - Specific use case|
 | artist_gender_match.do | Data Merging | Merge artists to our artist database - Specific use case|
-| --- | --- | --- |
+
+
 
 | mailbox_extraction | Side-Project | Contains scripts to automate data extraction and email sending |
 | --- | --- | --- |
@@ -27,4 +29,3 @@ Extract, clean and store artwork price data for research purposes
 | --- | --- | --- |
 | extraction > send_emails.py | Data Collection | Extract email data including sender, date, title, contents, attachments |
 | extraction > login.py | Settings | Store the login information for the mailbox |
-| --- | --- | --- |
