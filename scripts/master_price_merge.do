@@ -74,15 +74,21 @@ CHANGELOG:
 
 *******************************************************************************
 
+*					0) Setup Export Directory
+global exportDir = "D:\oxford\29-09-2022\"
+global rawDataDir = "D:\oxford\rawdata\"
+capture mkdir $export
+global priceDataDir = "$exportDir\PriceData"
+capture mkdir $priceDataDir
+
 
 *						1) Price Data
 * Setting the export location for the different price datasets
-local priceDataDir = "D:\oxford\02-11-2021\PriceData"
-
 
 * 				1a) Price Data: Artsy Fairs since October 2020
-local exportDir "D:\oxford\02-11-2021\PriceData\artsyFairs"
-local importDir "D:\oxford\rawdata\artsyFairs"
+local exportDir = "$priceDataDir\artsyFairs"
+capture mkdir `exportDir'
+local importDir = "$rawDataDir\artsyFairs"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -133,7 +139,7 @@ gen strL image_url = ""
 gen strL collectiondate = ""
 
 * Save the empty file and append the data.
-cd `priceDataDir'
+cd $priceDataDir
 save "fairs.dta", replace
 local stataFiles: dir "`exportDir'" files "*.dta"
 foreach file of local stataFiles {
@@ -156,7 +162,7 @@ drop if strpos(url, "artsy") == 0
 * Recast and compress string variables to save space
 recast str2045 artist artist_slug title year gallery gallery_slug price currency category materials dimensions url image_url collectiondate filename
 compress
-cd `priceDataDir'
+cd $priceDataDir
 * Save the submaster file for fairs.
 save "fairs.dta", replace
 
@@ -166,8 +172,9 @@ save "fairs.dta", replace
 * Fix in progress: 	Re-download data from past artsy fairs with improved
 * 					algorithm
 clear
-local exportDir "D:\oxford\02-11-2021\PriceData\pastFairs"
-local importDir "D:\oxford\rawdata\artsyPastFairs"
+local exportDir = "$priceDataDir\pastFairs"
+capture mkdir `exportDir'
+local importDir = "$rawDataDir\artsyPastFairs"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -217,7 +224,7 @@ gen strL image_url = ""
 gen strL collectiondate = ""
 
 
-cd `priceDataDir'
+cd $priceDataDir
 save "pastFairs.dta", replace
 
 local stataFiles: dir "`exportDir'" files "*.dta"
@@ -240,14 +247,15 @@ drop if strpos(url, "artsy") == 0
 * Recast and compress string variables to save space
 recast str2045 artist artist_slug title year gallery gallery_slug price currency category materials dimensions url image_url collectiondate filename
 compress
-cd `priceDataDir'
+cd $priceDataDir
 save "pastFairs.dta", replace
 
 
 *		1c) Artsy collections (many saves on different dates) (not fair data)
 clear
-local exportDir "D:\oxford\02-11-2021\PriceData\collections"
-local importDir "D:\oxford\rawdata\artsyCollections"
+local exportDir "$priceDataDir\collections"
+capture mkdir `exportDir'
+local importDir "$rawDataDir\artsyCollections"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -293,7 +301,7 @@ gen strL url = ""
 gen strL image_url = ""
 gen strL collection_url = ""
 
-cd `priceDataDir'
+cd $priceDataDir
 save "collections.dta", replace
 
 local stataFiles: dir "`exportDir'" files "*.dta"
@@ -315,15 +323,16 @@ drop if strpos(url, "artsy") == 0
 * Recast and compress string variables to save space
 recast str2045 artist title year gallery price currency category materials dimensions url image_url filename collection_url
 compress
-cd `priceDataDir'
+cd $priceDataDir
 save "collections.dta", replace
 
 
 
 *					1dA) ArtBasel:OVR
 clear
-local exportDir "D:\oxford\02-11-2021\PriceData\nonArtsy"
-local importDir "D:\oxford\rawdata\nonArtsy\ArtBaselOVR"
+local exportDir "$priceDataDir\nonArtsy"
+capture mkdir `exportDir'
+local importDir "$rawDataDir\nonArtsy\ArtBaselOVR"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -354,8 +363,8 @@ foreach file of local files {
 * The csv filenames do not include the year.
 * Change the fairName variable to include 2020!
 clear
-local exportDir "D:\oxford\02-11-2021\PriceData\nonArtsy"
-local importDir "D:\oxford\rawdata\nonArtsy\Artissima"
+local exportDir "$priceDataDir\nonArtsy"
+local importDir "$rawDataDir\nonArtsy\Artissima"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -386,8 +395,8 @@ foreach file of local files {
 
 *						1dC) FIAC
 clear
-local exportDir "D:\oxford\02-11-2021\PriceData\nonArtsy"
-local importDir "D:\oxford\rawdata\nonArtsy\FIAC"
+local exportDir "$priceDataDir\nonArtsy"
+local importDir "$rawDataDir\nonArtsy\FIAC"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -464,8 +473,8 @@ foreach file of local files {
 * The filenames do not contain the fair name. Add viennaContemporary to the
 * fairName variable.
 clear
-local exportDir "D:\oxford\02-11-2021\PriceData\nonArtsy"
-local importDir "D:\oxford\rawdata\nonArtsy\ViennaContemporary"
+local exportDir "$priceDataDir\nonArtsy"
+local importDir "$rawDataDir\nonArtsy\ViennaContemporary"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -504,8 +513,8 @@ foreach file of local files {
 
 *					1dF) Sotheby's
 clear
-local exportDir "D:\oxford\02-11-2021\PriceData\nonArtsy"
-local importDir "D:\oxford\rawdata\nonArtsy\Sothebys"
+local exportDir "$priceDataDir\nonArtsy"
+local importDir "$rawDataDir\nonArtsy\Sothebys"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -538,8 +547,8 @@ foreach file of local files {
 
 *					1dG) Gallery Platform LA
 clear
-local exportDir "D:\oxford\02-11-2021\PriceData\nonArtsy"
-local importDir "D:\oxford\rawdata\nonArtsy\GPLA"
+local exportDir "$priceDataDir\nonArtsy"
+local importDir "$rawDataDir\nonArtsy\GPLA"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -571,8 +580,8 @@ foreach file of local files {
 
 *					1dH) Frieze
 clear
-local exportDir "D:\oxford\02-11-2021\PriceData\nonArtsy"
-local importDir "D:\oxford\rawdata\nonArtsy\Frieze"
+local exportDir "$priceDataDir\nonArtsy"
+local importDir "$rawDataDir\nonArtsy\Frieze"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -613,7 +622,7 @@ foreach file of local files {
 
 * Create a master file from the individual .dta files.
 clear
-local exportDir "D:\oxford\02-11-2021\PriceData\nonArtsy"
+local exportDir "$priceDataDir\nonArtsy"
 * Generate the different variables and their default empty values.
 * Every string variable is stored as strL to avoid issues when appending.
 * When the merge is complete use compress to save disk space.
@@ -634,7 +643,7 @@ gen strL url = ""
 gen strL image_url = ""
 
 
-cd `priceDataDir'
+cd $priceDataDir
 save "nonArtsy.dta", replace
 local stataFiles: dir "`exportDir'" files "*.dta"
 
@@ -676,7 +685,7 @@ foreach file of local stataFiles {
 	save "`file'", replace
 }
 
-cd `priceDataDir'
+cd $priceDataDir
 use "nonArtsy.dta"
 
 cd `exportDir'
@@ -689,7 +698,7 @@ foreach file of local stataFiles {
 recast str2045 artist title year gallery price currency category materials dimensions url image_url filename
 compress
 
-cd `priceDataDir'
+cd $priceDataDir
 save "nonArtsy.dta", replace
 
 
@@ -724,12 +733,12 @@ gen strL sold = ""
 cd `projectFolder'
 save "priceMaster.dta", replace
 
-cd `priceDataDir'
-local stataFiles: dir "`priceDataDir'" files "*.dta"
-cd `priceDataDir'
+cd $priceDataDir
+local stataFiles: dir "$priceDataDir" files "*.dta"
+cd $priceDataDir
 
 foreach file of local stataFiles {
-	cd `priceDataDir'
+	cd $priceDataDir
 	append using "`file'", force
 }
 
@@ -768,7 +777,7 @@ save "priceMaster.dta", replace
 clear
 
 * Set up folders and files
-local rawFairData "D:\oxford\rawdata\fairData\fairID_multiple.xlsx"
+local rawFairData "$rawDataDir\fairData\fairID_multiple.xlsx"
 local stataFairDataLocation "D:\oxford\02-11-2021\FairData"
 local projectFolder "D:\oxford\02-11-2021"
 
@@ -802,7 +811,7 @@ save "priceMaster.dta", replace
 
 
 clear
-local fairLocationData "D:\oxford\rawdata\fairData\fair_locations.xlsx"
+local fairLocationData "$rawDataDir\fairData\fair_locations.xlsx"
 import excel using `fairLocationData', firstrow case(lower)
 capture tostring fair_id, replace
 cd `stataFairDataLocation'

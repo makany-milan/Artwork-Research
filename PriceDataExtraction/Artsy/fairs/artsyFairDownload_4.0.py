@@ -168,7 +168,7 @@ def JSONextractor(container):
         try:
             lowprice = JSONdata['offers']['lowPrice']
             highprice = JSONdata['offers']['highPrice']
-            price = str(lowprice) + '-' + str(highprice)
+            price = f'{str(lowprice)}-str{(highprice)}'
         except:
             price = ''
 

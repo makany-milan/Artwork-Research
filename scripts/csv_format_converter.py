@@ -20,6 +20,16 @@ EXPORTLOCATIONS = {
     'nonArtsy': r'D:\oxford\rawdata\nonArtsy'
 }
 
+
+IMPORTLOCATIONS = {
+    'newArt': r'D:\oxford\art-data'
+}
+
+EXPORTLOCATIONS = {
+    'newArt': r'D:\oxford\art-data\cleaned'
+}
+
+
 MONTHS = {
     'Jan': '01',
     'Feb': '02',
@@ -220,6 +230,9 @@ if __name__ == '__main__':
                 convertCSVNewFiles(f, IMPORTLOCATIONS[key], EXPORTLOCATIONS[key])
         
         elif key == 'artsyPastFairs':
+            for f in files:
+                convertCSVNewFiles(f, IMPORTLOCATIONS[key], EXPORTLOCATIONS[key])
+        elif key == 'newArt':
             for f in files:
                 convertCSVNewFiles(f, IMPORTLOCATIONS[key], EXPORTLOCATIONS[key])
         else:
