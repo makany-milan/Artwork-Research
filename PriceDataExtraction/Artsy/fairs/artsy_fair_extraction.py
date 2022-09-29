@@ -314,11 +314,14 @@ class Artwork:
             else:
                 self.price = ''
         except:
-            if price_block:
-                lowprice = price_block['lowPrice']
-                highprice = price_block['highPrice']
-                self.price = f'{str(lowprice)}-{str(highprice)}'
-            else:
+            try:
+                if price_block:
+                    lowprice = price_block['lowPrice']
+                    highprice = price_block['highPrice']
+                    self.price = f'{str(lowprice)}-{str(highprice)}'
+                else:
+                    self.price = ''
+            except:
                 self.price = ''
 
         try:
