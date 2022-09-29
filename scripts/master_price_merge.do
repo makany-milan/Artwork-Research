@@ -253,9 +253,9 @@ save "pastFairs.dta", replace
 
 *		1c) Artsy collections (many saves on different dates) (not fair data)
 clear
-local exportDir "$priceDataDir\collections"
+local exportDir = "$priceDataDir\collections"
 capture mkdir `exportDir'
-local importDir "$rawDataDir\artsyCollections"
+local importDir = "$rawDataDir\artsyCollections"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -330,9 +330,9 @@ save "collections.dta", replace
 
 *					1dA) ArtBasel:OVR
 clear
-local exportDir "$priceDataDir\nonArtsy"
+local exportDir = "$priceDataDir\nonArtsy"
 capture mkdir `exportDir'
-local importDir "$rawDataDir\nonArtsy\ArtBaselOVR"
+local importDir = "$rawDataDir\nonArtsy\ArtBaselOVR"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -363,8 +363,8 @@ foreach file of local files {
 * The csv filenames do not include the year.
 * Change the fairName variable to include 2020!
 clear
-local exportDir "$priceDataDir\nonArtsy"
-local importDir "$rawDataDir\nonArtsy\Artissima"
+local exportDir = "$priceDataDir\nonArtsy"
+local importDir = "$rawDataDir\nonArtsy\Artissima"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -395,8 +395,8 @@ foreach file of local files {
 
 *						1dC) FIAC
 clear
-local exportDir "$priceDataDir\nonArtsy"
-local importDir "$rawDataDir\nonArtsy\FIAC"
+local exportDir = "$priceDataDir\nonArtsy"
+local importDir = "$rawDataDir\nonArtsy\FIAC"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -473,8 +473,8 @@ foreach file of local files {
 * The filenames do not contain the fair name. Add viennaContemporary to the
 * fairName variable.
 clear
-local exportDir "$priceDataDir\nonArtsy"
-local importDir "$rawDataDir\nonArtsy\ViennaContemporary"
+local exportDir = "$priceDataDir\nonArtsy"
+local importDir = "$rawDataDir\nonArtsy\ViennaContemporary"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -513,8 +513,8 @@ foreach file of local files {
 
 *					1dF) Sotheby's
 clear
-local exportDir "$priceDataDir\nonArtsy"
-local importDir "$rawDataDir\nonArtsy\Sothebys"
+local exportDir = "$priceDataDir\nonArtsy"
+local importDir = "$rawDataDir\nonArtsy\Sothebys"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -547,8 +547,8 @@ foreach file of local files {
 
 *					1dG) Gallery Platform LA
 clear
-local exportDir "$priceDataDir\nonArtsy"
-local importDir "$rawDataDir\nonArtsy\GPLA"
+local exportDir = "$priceDataDir\nonArtsy"
+local importDir = "$rawDataDir\nonArtsy\GPLA"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -580,8 +580,8 @@ foreach file of local files {
 
 *					1dH) Frieze
 clear
-local exportDir "$priceDataDir\nonArtsy"
-local importDir "$rawDataDir\nonArtsy\Frieze"
+local exportDir = "$priceDataDir\nonArtsy"
+local importDir = "$rawDataDir\nonArtsy\Frieze"
 local files: dir "`importDir'" files "*.csv"
 * Convert .csv files to .dta
 foreach file of local files {
@@ -622,7 +622,7 @@ foreach file of local files {
 
 * Create a master file from the individual .dta files.
 clear
-local exportDir "$priceDataDir\nonArtsy"
+local exportDir = "$priceDataDir\nonArtsy"
 * Generate the different variables and their default empty values.
 * Every string variable is stored as strL to avoid issues when appending.
 * When the merge is complete use compress to save disk space.
@@ -707,7 +707,6 @@ save "nonArtsy.dta", replace
 
 * Merge collections, fairs, nonArtsy and pastFairs data
 clear
-local projectFolder "D:\oxford\02-11-2021"
 
 * Generate the different variables and their default empty values.
 * Every string variable is stored as strL to avoid issues when appending.
@@ -730,7 +729,7 @@ gen strL image_url = ""
 gen strL collection_url = ""
 gen strL sold = ""
 
-cd `projectFolder'
+cd $exportDir
 save "priceMaster.dta", replace
 
 cd $priceDataDir
@@ -763,7 +762,7 @@ drop if gallery == "Have a question? Visit our help center."
 drop if gallery == "Conditions of Sale"
 drop if title == "Artsy"
 
-cd `projectFolder'
+cd $exportDir
 save "priceMaster.dta", replace
 
 
@@ -778,8 +777,8 @@ clear
 
 * Set up folders and files
 local rawFairData "$rawDataDir\fairData\fairID_multiple.xlsx"
-local stataFairDataLocation "D:\oxford\02-11-2021\FairData"
-local projectFolder "D:\oxford\02-11-2021"
+local stataFairDataLocation "$exportDir\FairData"
+capture mkdir `stataFairDataLocation'
 
 * Import FairID and drop unnecessary variables
 import excel using `rawFairData', firstrow case(lower)
@@ -794,7 +793,7 @@ save "fairID.dta", replace
 
 * Use price data file to preform a m:1 merge
 clear
-cd `projectFolder'
+cd $exportDir
 use "priceMaster.dta"
 
 * Cannot merge along srtL variables: recast to str#
@@ -806,25 +805,25 @@ cd `stataFairDataLocation'
 merge m:1 filename using "FairID.dta", gen(fairMerge)
 
 * Save the results
-cd `projectFolder'
+cd $exportDir
 save "priceMaster.dta", replace
 
 
 clear
-local fairLocationData "$rawDataDir\fairData\fair_locations.xlsx"
+local fairLocationData "$rawDataDir\FairData\fair_locations.xlsx"
 import excel using `fairLocationData', firstrow case(lower)
 capture tostring fair_id, replace
 cd `stataFairDataLocation'
 save "fair_location.dta", replace
 clear
-cd `projectFolder'
+cd $exportDir
 use "priceMaster.dta"
 cd `stataFairDataLocation'
 merge m:1 fair_id using "fair_location.dta", keepusing(fair_location) gen(fairLocMerge)
 drop if fairLocMerge == 2
 drop fairLocMerge
 
-cd `projectFolder'
+cd $exportDir
 save "priceMaster.dta", replace
 *******************************************************************************
 
@@ -832,18 +831,17 @@ save "priceMaster.dta", replace
 *						3) Gender Data
 clear
 
-local stataGenderLocation "D:\oxford\02-11-2021\GenderData"
-local projectFolder "D:\oxford\02-11-2021"
+local stataGenderLocation "$rawDataDir\GenderData"
 
 * Use price data file to preform a m:1 merge
-cd `projectFolder'
+cd $exportDir
 use "priceMaster.dta"
 
 cd `stataGenderLocation'
 merge m:1 artist using "artistGender.dta", gen(genderMerge)
 drop if genderMerge == 2
 
-cd `projectFolder'
+cd $exportDir
 save "priceMaster.dta", replace
 
 
@@ -855,9 +853,14 @@ save "priceMaster.dta", replace
 
 * Add gender match and NN prediction
 * The following process can only be done in Python
-local genderClassificationDir "D:\oxford\02-11-2021\GenderClassification"
+local genderClassificationDir "$exportDir\GenderClassification"
+capture mkdir `genderClassificationDir'
 cd `genderClassificationDir'
 export delimited gender-classification.csv, replace
+
+*** PYTHON BLOCK HERE
+
+
 * After the code has ran, import the updated version
 import delimited using gender-classification-done.csv, encoding(utf8) bindquote(strict) varnames(1) case(preserve) decimals(.)
 * Some entries are corrupted due to the csv import
@@ -1166,8 +1169,7 @@ replace depth_cm = depth * 2.54 if measurement == 1
 gen datecur = string(collectiondate) + lower(currency) if currency != "", after(currency)
 
 * Save changes
-local projectFolder "D:\oxford\02-11-2021"
-cd `projectFolder'
+cd $exportDir
 save "priceMaster.dta", replace
 
 
@@ -1214,7 +1216,7 @@ rename price exchange_rate
 cd `mergeCurDir'
 save "masterCurrency.dta", replace
 * Merge FX data
-cd `projectFolder'
+cd $exportDir
 use "priceMaster.dta"
 cd `mergeCurDir'
 merge m:1 datecur using masterCurrency.dta, keepusing(exchange_rate) gen(currencyMerge)
@@ -1942,5 +1944,5 @@ replace mega_price = 0 if mega_price ==. & price != .
 gen artist_age = 2021 - birth_year
 order artist_age, after(artist_deceased)
 
-cd `projectFolder'
+cd $exportDir
 save "priceMaster.dta", replace
