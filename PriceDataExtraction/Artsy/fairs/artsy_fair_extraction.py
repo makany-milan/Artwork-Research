@@ -36,10 +36,13 @@ class Artsy:
         current_fairs = soup.find_all(current_fair_tags[0], {current_fair_tags[1]: current_fair_tags[2]})
         self.current_fairs = []
         for fair in current_fairs:
-            link = fair.find('a')
-            link = 'https://www.artsy.net' + link['href']
-            if 'fair' in link:
-                self.current_fairs.append(link)
+            try:
+                link = fair.find('a')
+                link = 'https://www.artsy.net' + link['href']
+                if 'fair' in link:
+                    self.current_fairs.append(link)
+            except:
+                pass
 
         past_fairs = soup.find_all(part_fair_tags[0], {part_fair_tags[1]: part_fair_tags[2]})
         self.past_fairs = []
