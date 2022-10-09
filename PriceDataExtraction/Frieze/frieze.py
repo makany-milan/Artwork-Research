@@ -15,9 +15,9 @@ password = 'ArtProject+44'
 
 TODAY = date.today().strftime('%d-%m-%Y')
 
-FAIRNAME = f'frieze-ny-{TODAY}.csv'
-EXPORTLOC = rf'C:\Users\Milan\OneDrive\Desktop\Said\Art\PriceDataExtraction\Frieze\data\{FAIRNAME}'
-CONTACTEXPORTLOC = rf'C:\Users\Milan\OneDrive\Desktop\Said\Art\PriceDataExtraction\Frieze\data\{FAIRNAME}-contacts.csv'
+FAIRNAME = f'frieze-london-{TODAY}.csv'
+EXPORTLOC = rf'C:\Users\u2048873\Oxford_Data\frieze\{FAIRNAME}'
+CONTACTEXPORTLOC = rf'C:\Users\u2048873\Oxford_Data\frieze\{FAIRNAME}-contacts.csv'
 
 options = webdriver.ChromeOptions()
 # maximises the window on launch
@@ -30,7 +30,7 @@ actions = ActionChains(driver)
 def login():
     driver.get('https://viewingroom.frieze.com/')
     sleep(3)
-    signInButton = driver.find_element_by_xpath('/html/body/div[1]/div/div/div[3]/button')
+    signInButton = driver.find_element_by_xpath('/html/body/div[1]/div/div/div/div/div/div[2]/div[2]/button')
     signInButton.click()
     sleep(3)
     driver.find_element_by_id('pelcro-input-email').send_keys(username)
@@ -41,9 +41,10 @@ def login():
 
 def openCategories():
     links = [
-        'https://viewingroom.frieze.com/section/11?sections%5B0%5D=11&skip=0&limit=100',
-        'https://viewingroom.frieze.com/section/12?sections%5B0%5D=12&skip=0&limit=16',
-        'https://viewingroom.frieze.com/section/13?sections%5B0%5D=13&skip=0&limit=200'
+        'https://viewingroom.frieze.com/section/39?sections%5B0%5D=39&skip=0&limit=16',
+        'https://viewingroom.frieze.com/section/43?sections%5B0%5D=43&skip=0&limit=16',
+        'https://viewingroom.frieze.com/section/42?sections%5B0%5D=42&skip=0&limit=16',
+        'https://viewingroom.frieze.com/section/37?sections%5B0%5D=37&skip=0&limit=16'
     ]
     return links
 
@@ -53,7 +54,7 @@ def openGallery(url):
     sleep(3)
     gallery = getGalleryData()
     scrollToBottom()
-    artworks = driver.find_elements_by_class_name('a16heqoh')
+    artworks = driver.find_elements_by_class_name('cqulfal')
     resp = []
     for item in artworks:
         ret = getArtworkData(item, gallery[0])
