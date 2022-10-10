@@ -75,9 +75,13 @@ CHANGELOG:
 *******************************************************************************
 
 *					0) Setup Export Directory
-global exportDir = "D:\oxford\29-09-2022\"
+global masterDir = "C:\Users\Milan\OneDrive\Desktop\Oxford-Art"
+global scriptsDir = "$masterDir\scripts"
+
+
+global exportDir = "D:\oxford\07-10-2022\"
 global rawDataDir = "D:\oxford\rawdata\"
-capture mkdir $export
+capture mkdir $exportDir
 global priceDataDir = "$exportDir\PriceData"
 capture mkdir $priceDataDir
 
@@ -340,14 +344,21 @@ foreach file of local files {
     clear
 	cd `importDir'
 	import delimited using "`file'", varnames(1) delimiter(";") encoding(utf-8) bindquotes(strict)
+	
+	* Few observations have incorrect formatting..
+	drop if currency != "USD"
+	keep artist title year gallery price materials dimensions url image_url collectiondate currency
+	
 	* Check if the csv file already has id-s assigned to the artworks. If not assign them.
 	* Inconsistencies might arise for fairs that were saved on multiple occasions.
 	* (The same artwork might have a different ID on a different date)
 	capture confirm variable id
+
 	* If the variable id does not exist, generate the id numbers.
 	if !!_rc {
 	    qui: gen long id = _n, before(artist)
 	}
+	
 	* Create fair variable to store the name of the fair.
 	local fairName = subinstr("`file'", ".csv", "", .)
 	qui: gen str fair = "`fairName'", before(id)
@@ -407,13 +418,18 @@ foreach file of local files {
 	* Some entries are were inconsistently extracted from the website.
 	* Drop all entries without the name of the artist
 	drop if artist == ""
+	* Few observations have incorrect formatting..
+	drop if currency != "USD"
+	keep artist title year gallery price materials dimensions url image_url collectiondate currency
 	* Prices are recorded both in USD and EUR. Keep only one and add a currency variable.
 	* This has been solved during preprocessing in python.
+	
 	/*
 	drop priceeur
 	rename priceusd price
-	gen currency = "USD", after(price
+	gen currency = "USD", after(price)
 	*/
+	
 	* Check if the csv file already has id-s assigned to the artworks. If not assign them.
 	* Inconsistencies might arise for fairs that were saved on multiple occasions.
 	capture confirm variable id
@@ -804,6 +820,8 @@ capture compress filename
 cd `stataFairDataLocation'
 merge m:1 filename using "FairID.dta", gen(fairMerge)
 
+drop if fairMerge == 2
+
 * Save the results
 cd $exportDir
 save "priceMaster.dta", replace
@@ -831,14 +849,14 @@ save "priceMaster.dta", replace
 *						3) Gender Data
 clear
 
-local stataGenderLocation "$rawDataDir\GenderData"
+local stataGenderLocation "$rawDataDir\artistData"
 
 * Use price data file to preform a m:1 merge
 cd $exportDir
 use "priceMaster.dta"
 
 cd `stataGenderLocation'
-merge m:1 artist using "artistGender.dta", gen(genderMerge)
+merge m:1 artist using "masterArtist.dta", gen(genderMerge)
 drop if genderMerge == 2
 
 cd $exportDir
@@ -849,20 +867,40 @@ save "priceMaster.dta", replace
 *******************************************************************************
 
 
-*						4) Reformat variables and correct issues
-
+*		4) NN GENDER CLASSIFICATION & Reformat variables and correct issues
+clear
+cd $exportDir
+use priceMaster
 * Add gender match and NN prediction
 * The following process can only be done in Python
-local genderClassificationDir "$exportDir\GenderClassification"
-capture mkdir `genderClassificationDir'
+local genderClassificationDir = "$exportDir\\GenderClassification"
+local classifiedFileLocation = "`genderClassificationDir'\priceMaster-done.csv"
+
+confirm new file `classifiedFileLocation'
+if _rc == 0 {
+    capture mkdir `genderClassificationDir'
+	cd `genderClassificationDir'
+	export delimited priceMaster.csv, replace
+
+	clear
+
+	*** PYTHON BLOCK HERE
+	* Environment has to have numpy, pandas, keras, tensorflow
+	* set python_exec "C:\Users\Milan\Anaconda\anaconda3\envs\oxford\python.exe"
+	cd $scriptsDir
+	shell conda activate oxford & python name_gender_classification.py --folder `genderClassificationDir' --file priceMaster.csv
+	* python name_gender_classification.py --folder `genderClassificationDir' --file priceMaster.csv
+	* After the code has ran, import the updated version
+}
+
+
+
 cd `genderClassificationDir'
-export delimited gender-classification.csv, replace
+import delimited using priceMaster-done.csv, encoding(utf8) delimiter(";") bindquote(strict) varnames(1) case(preserve)
 
-*** PYTHON BLOCK HERE
+cd $exportDir
+save priceMaster, replace
 
-
-* After the code has ran, import the updated version
-import delimited using gender-classification-done.csv, encoding(utf8) bindquote(strict) varnames(1) case(preserve) decimals(.)
 * Some entries are corrupted due to the csv import
 gen corrupt = 1 if isFair == ""
 replace corrupt = 1 if isFair != "0" & isFair != "1"
@@ -1175,13 +1213,18 @@ save "priceMaster.dta", replace
 
 * Convert all currencies to USD at the appropriate exchange rate.
 * FX data from https://www.investing.com/
-local currencyDir "D:\SBS\Data\rawDataConverted\CurrencyData"
-local exportDir "D:\oxford\02-11-2021\CurrencyData\FX"
-local mergeCurDir "D:\oxford\02-11-2021\CurrencyData"
-local projectFolder "D:\oxford\02-11-2021"
+local currencyDir "$rawDataDir\CurrencyData"
+
+local exportDir "$exportDir\CurrencyData\FX"
+local mergeCurDir "$exportDir\CurrencyData"
+
+mkdir `mergeCurDir'
+mkdir `exportDir'
+
+local projectFolder "$masterDir"
 local curfiles: dir "`currencyDir'" files "*.csv"
 * Install package to fill in gaps in FX data
-ssc install carryforward
+capture ssc install carryforward
 
 foreach file of local curfiles {
 	clear
@@ -1191,7 +1234,7 @@ foreach file of local curfiles {
 	
 	capture drop open high low change
 	
-	gen datef = date(date, "MDY"), before(price)
+	gen datef = date(date, "DMY"), before(price)
 	
 	* Fill the weekend gaps using Friday's data
 	tsset datef
@@ -1216,6 +1259,11 @@ rename price exchange_rate
 cd `mergeCurDir'
 save "masterCurrency.dta", replace
 * Merge FX data
+
+local exportDir "$exportDir\CurrencyData\FX"
+local mergeCurDir "$exportDir\CurrencyData"
+
+
 cd $exportDir
 use "priceMaster.dta"
 cd `mergeCurDir'
