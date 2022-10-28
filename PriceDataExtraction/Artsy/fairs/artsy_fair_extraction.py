@@ -54,11 +54,14 @@ class Artsy:
 
     def make_request(self, url):
         sleep(5)
-        r = requests.get(url, timeout=120, headers=self.headers)
-        if r.status_code == 200:
-            return r.content
-        else:
-            print(r.status_code)
+        try:
+            r = requests.get(url, timeout=120, headers=self.headers)
+            if r.status_code == 200:
+                return r.content
+            else:
+                print(r.status_code)
+                return None
+        except Exception as e:
             return None
 
 
@@ -97,7 +100,7 @@ class Artsy:
 class Fair:
     def __init__(self, url, export_path):
         self.url = url
-        self.export_file = url.split('/')[-1] + '.csv'
+        self.export_file = url.split('/')[-1] + '-' + TODAY + '.csv'
         self.search_url = url + '/artworks?page='
 
         self.timeout = 120
@@ -405,6 +408,6 @@ class Artwork:
 
 if __name__ == '__main__':
     main = Artsy()
-    #main.extract_current_fairs()
+    main.extract_current_fairs()
     #main.extract_past_fairs()
-    main.extract_txt_fairs()
+    #main.extract_txt_fairs()

@@ -5,10 +5,16 @@ from selenium.webdriver.common.keys import Keys
 from time import sleep
 import csv
 from pathlib import Path
+from datetime import date
+
+
+TODAY = date.today().strftime('%d-%m-%Y')
+
 
 options = ChromeOptions()
 # maximises the window on launch
 options.add_argument("--start-maximized")
+
 
 
 class Engine:
@@ -54,19 +60,22 @@ class Engine:
 
 class Fair:
     def __init__(self, engine, fair_page, fair_name) -> None:
-        self.main_page = 'https://viewingroom.frieze.com/'
+        self.main_page = 'https://www.frieze.com/fairs'
         self.fair_page = fair_page
         self.fair_name = fair_name
         self.engine = engine
         self.username = 'dawei.zhuang@outlook.com'
         self.password = 'ArtProject+44'
 
-        self.exportLoc = Path(rf'C:\Users\u2048873\Oxford_Data\frieze\frieze-{fair_name}.csv')
+        self.exportLoc = Path(rf'C:\Users\u2048873\Oxford_Data\frieze\frieze-{fair_name}-{TODAY}.csv')
         self.createExport()
 
         self.galleries = []
 
-        self.login()
+        try:
+            self.login()
+        except:
+            pass
         self.findGalleries()
 
         self.exportData()
@@ -74,8 +83,8 @@ class Fair:
 
     def login(self):
         self.engine.get(self.main_page)
-        signInButton = self.engine.driver.find_element_by_xpath('/html/body/div[1]/div/div/div/div/div/div[2]/div[2]/button')
-        signInButton.click()
+        sleep(2)
+        sleep(2)
         sleep(3)
         self.engine.driver.find_element_by_id('pelcro-input-email').send_keys(self.username)
         self.engine.driver.find_element_by_id('pelcro-input-password').send_keys(self.password)
@@ -105,8 +114,7 @@ class Fair:
     def createExport(self):
         with open(self.exportLoc, 'w', newline='', encoding='UTF-8') as f:
             writer = csv.writer(f, delimiter=';', quotechar='|')
-            if type == 0:
-                writer.writerow(['artist', 'title', 'year', 'price', 'materials', 'dimensions', 'image_url', 'url', 'gallery',])
+            writer.writerow(['artist', 'title', 'year', 'price', 'materials', 'dimensions', 'image_url', 'url', 'gallery',])
 
 
     def exportData(self):
@@ -191,8 +199,6 @@ class Gallery:
         return [artist, title, year, price, materials, dimensions, image]
 
 
-
-
 if __name__ == '__main__':
     engine = Engine()
     fairs = {
@@ -202,3 +208,5 @@ if __name__ == '__main__':
     for key in fairs:
         fair = fairs[key]
         f = Fair(engine, fair, key)
+
+    engine.driver.close()
