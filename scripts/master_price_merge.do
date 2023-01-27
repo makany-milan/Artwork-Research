@@ -79,8 +79,8 @@ global masterDir = "C:\Users\Milan\OneDrive\Desktop\Oxford-Art"
 global scriptsDir = "$masterDir\scripts"
 
 
-global exportDir = "D:\oxford\07-10-2022\"
-global rawDataDir = "D:\oxford\rawdata\"
+global exportDir = "C:\Users\Milan\Dropbox\ArtFairs\Data"
+global rawDataDir = "C:\Users\Milan\Dropbox\ArtFairs\Data\rawdata"
 capture mkdir $exportDir
 global priceDataDir = "$exportDir\PriceData"
 capture mkdir $priceDataDir
@@ -605,6 +605,47 @@ foreach file of local files {
     clear
 	cd `importDir'
 	import delimited using "`file'", varnames(1) delimiter(";") encoding(utf-8) bindquotes(strict)
+	* Some entries are were inconsistently extracted from the website.
+	* Drop all entries without the name of the artist
+	drop if artist == ""
+	* Prices are recorded both in USD and EUR. Keep only one and add a currency variable.
+	* This has been solved during preprocessing in python.
+	/*
+	drop priceeur
+	rename priceusd price
+	gen currency = "USD", after(price
+	*/
+	* Check if the csv file already has id-s assigned to the artworks. If not assign them.
+	* Inconsistencies might arise for fairs that were saved on multiple occasions.
+	capture confirm variable id
+	* If the variable id does not exist, generate the id numbers.
+	if !!_rc {
+	    qui: gen long id = _n, before(artist)
+	}
+	* Create fair variable to store the name of the fair.
+	local fairName = subinstr("`file'", ".csv", "", .)
+	qui: gen str fair = "`fairName'", before(id)
+	qui: gen str filename = "`file'", before(id)
+	qui: gen byte isFair = 1
+	* rename medium materials  // solved during preprocessing
+	* Create a .dta file with the same name as the .csv file
+	cd `exportDir'
+	save "`fairName'.dta", replace
+}
+
+*					1dH) Frieze2022
+
+clear
+local exportDir = "$priceDataDir\nonArtsy"
+local importDir = "$rawDataDir\nonArtsy\Frieze2022"
+local files: dir "`importDir'" files "*.csv"
+* Convert .csv files to .dta
+foreach file of local files {
+    * Clear memory
+    clear
+	cd `importDir'
+	import delimited using "`file'", delimiter(";") encoding(utf-8) bindquotes(strict)
+	rename (v1 v2 v3 v4 v5 v6 v7 v8 v9) (artist title year price material dimensions image_url gallery url)
 	* Some entries are were inconsistently extracted from the website.
 	* Drop all entries without the name of the artist
 	drop if artist == ""
