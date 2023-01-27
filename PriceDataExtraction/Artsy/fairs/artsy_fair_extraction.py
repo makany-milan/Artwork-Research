@@ -36,10 +36,13 @@ class Artsy:
         current_fairs = soup.find_all(current_fair_tags[0], {current_fair_tags[1]: current_fair_tags[2]})
         self.current_fairs = []
         for fair in current_fairs:
-            link = fair.find('a')
-            link = 'https://www.artsy.net' + link['href']
-            if 'fair' in link:
-                self.current_fairs.append(link)
+            try:
+                link = fair.find('a')
+                link = 'https://www.artsy.net' + link['href']
+                if 'fair' in link:
+                    self.current_fairs.append(link)
+            except:
+                pass
 
         past_fairs = soup.find_all(part_fair_tags[0], {part_fair_tags[1]: part_fair_tags[2]})
         self.past_fairs = []
@@ -51,11 +54,14 @@ class Artsy:
 
     def make_request(self, url):
         sleep(5)
-        r = requests.get(url, timeout=120, headers=self.headers)
-        if r.status_code == 200:
-            return r.content
-        else:
-            print(r.status_code)
+        try:
+            r = requests.get(url, timeout=120, headers=self.headers)
+            if r.status_code == 200:
+                return r.content
+            else:
+                print(r.status_code)
+                return None
+        except Exception as e:
             return None
 
 
@@ -94,7 +100,7 @@ class Artsy:
 class Fair:
     def __init__(self, url, export_path):
         self.url = url
-        self.export_file = url.split('/')[-1] + '.csv'
+        self.export_file = url.split('/')[-1] + '-' + TODAY + '.csv'
         self.search_url = url + '/artworks?page='
 
         self.timeout = 120
@@ -402,6 +408,6 @@ class Artwork:
 
 if __name__ == '__main__':
     main = Artsy()
-    #main.extract_current_fairs()
+    main.extract_current_fairs()
     #main.extract_past_fairs()
-    main.extract_txt_fairs()
+    #main.extract_txt_fairs()
