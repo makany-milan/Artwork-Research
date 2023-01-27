@@ -908,6 +908,7 @@ save "priceMaster.dta", replace
 *******************************************************************************
 
 
+err
 *		4) NN GENDER CLASSIFICATION & Reformat variables and correct issues
 clear
 cd $exportDir
